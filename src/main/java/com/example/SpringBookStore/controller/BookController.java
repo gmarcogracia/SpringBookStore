@@ -29,6 +29,8 @@ public class BookController {
         return "form";
 
     }
+
+    //TODO AÑADIR EDIT Y DELETE Y UPDATE A LIBROS Y COPIES
     @GetMapping({"/","/booklist"})
     public String showBookList(Model model){
         model.addAttribute("books", bookRepository.findAll());
@@ -43,7 +45,7 @@ public class BookController {
 
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        String uploadDir = "uploads/";
+        String uploadDir = "myImages/";
 
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         book.setImages(fileName);

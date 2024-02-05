@@ -16,6 +16,8 @@ import java.util.List;
 @Entity
 @Table(name="users")
 public class User {
+
+    private static final long serialVersionUID = 1L; //i HAVE NO IDEA WHAT THIS DOES but the original file had it so...
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;

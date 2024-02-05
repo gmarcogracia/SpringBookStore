@@ -62,7 +62,7 @@ public class LoanedBookController {
 
         if (!(authentication instanceof AnonymousAuthenticationToken)) {//Apparently this checks if theres an autenticated user UNTESTED
         LoanedBook copy=loanedBookRepository.findById(id);
-        copy.setUser(userRepository.findByName(authentication.getName()));
+        copy.setUser(userRepository.findByEmail(authentication.getName()));
         Date now = new Date();
         copy.setLoanDate(now);
             Calendar calendar = Calendar.getInstance();

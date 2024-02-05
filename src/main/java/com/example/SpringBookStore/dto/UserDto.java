@@ -1,5 +1,8 @@
 package com.example.SpringBookStore.dto;
 
+import com.example.SpringBookStore.entity.LoanedBook;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -22,6 +25,10 @@ public class UserDto
     @NotEmpty
     private  String name;
 
+
+
+
+    private LoanedBook loanedBook;
 
 
 

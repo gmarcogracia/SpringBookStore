@@ -33,11 +33,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
             http.csrf().disable()
                     .authorizeHttpRequests((authorize) ->
                             authorize.requestMatchers("/register/**").permitAll()
-                                    .requestMatchers("/index").permitAll()
+                                    .requestMatchers("/index","/**").permitAll()
                                      .requestMatchers("/users").hasRole("ADMIN")
-                                    .requestMatchers("/crud/books").hasRole("ADMIN")
-                                    .requestMatchers("/**").permitAll()
-                                    .requestMatchers("/books/**").permitAll()
+                                    .requestMatchers("/crud/**").permitAll()//hasRole("ADMIN")
+                                    .requestMatchers("/books/**","/loans/**").permitAll()
                                     .requestMatchers("/booklist/**").permitAll()
 
                                     .requestMatchers("/?continue")

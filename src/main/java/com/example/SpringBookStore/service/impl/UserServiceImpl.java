@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
 
@@ -36,14 +36,14 @@ public class UserServiceImpl implements UserService {
 
 
        //TODO FIX MIXMATCH BETWEEN ENCRYPTED PASSWORDS AND RAW PASSWORDS  ASK ANTONIO  user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setPassword(userDto.getPassword());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_ADMIN");
+        Role role = roleRepository.findByName("CLIENT");
         if(role == null){
             role = checkRoleExist();
         }
         user.setRoles(Arrays.asList(role));
-        userRepository.save(user);
+
         userRepository.save(user);
     }
 
@@ -62,8 +62,10 @@ public class UserServiceImpl implements UserService {
     private UserDto convertEntityToDto(User user){
         UserDto userDto = new UserDto();
         userDto.setEmail(user.getEmail());
-        userDto.setPassword(user.getPassword());
+        userDto.setName(user.getName());
         userDto.setPenalty(user.getPenalty());
+        userDto.setLoanedBook(user.getLoanedBook());
+
 
         return userDto;
     }

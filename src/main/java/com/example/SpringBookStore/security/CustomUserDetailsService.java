@@ -34,6 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.getPassword(),
                     mapRolesToAuthorities(user.getRoles()));
         }else{
+            System.out.println(user);
             throw new UsernameNotFoundException("Invalid username or password.");
         }
     }

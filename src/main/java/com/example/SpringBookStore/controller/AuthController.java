@@ -1,9 +1,9 @@
 package com.example.SpringBookStore.controller;
 
-
 import com.example.SpringBookStore.dto.UserDto;
 import com.example.SpringBookStore.entity.User;
 import com.example.SpringBookStore.service.UserService;
+
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +29,6 @@ public class AuthController {
         return "login";
     }
 
-
     // handler method to handle user registration request
     @GetMapping("register")
     public String showRegistrationForm(Model model){
@@ -52,7 +51,6 @@ public class AuthController {
             return "register";
         }
         user.setPenalty(0);
-
         userService.saveUser(user);
         return "redirect:/register?success";
     }

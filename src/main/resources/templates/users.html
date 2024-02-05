@@ -38,15 +38,19 @@
     <thead class="table-dark">
     <tr>
       <th>Name</th>
-      <th>Role</th>
       <th>Email</th>
+      <th>Loaned book</th>
+      <th>Penalty</th>
+
+
     </tr>
     </thead>
     <tbody>
     <tr th:each="user: ${users}">
       <td th:text="${user.name}"></td>
-      <td th:text="${user.role}"></td>
       <td th:text="${user.email}"></td>
+      <td th:text="${user.loanedBook}"></td>
+      <td th:text="${user.penalty}"></td>
 
     </tr>
     </tbody>
