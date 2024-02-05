@@ -1,0 +1,47 @@
+<!---UNUSED
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Book Form</h2>
+   <h1 th:text="${book.id != 0} ? @{'Modificar'} : @{'Añadir'}"></h1> -->
+<!---
+    <form action="formulario.php" method="post"
+          th:action="@{/crud/copies/create/submit}"
+          th:object="${copy}">
+      Not working "${book.id != 0} ? @{/books/modificar/submit} : @{/books/create/submit}"-->
+<!---
+        <div class="form-group">
+            <label for="nombre">Title:</label>
+            <input type="text" class="form-control" id="nombre" th:field="*{title}">
+        </div>
+        <div class="form-group">
+            <label for="tags">Tags:</label>
+            <input type="text" class="form-control" id="tags" th:field="*{tags}">
+        </div>
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" class="form-control" id="author" th:field="*{author}">
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" class="form-control" id="price" step="any"  th:field="*{price}" >
+        </div>
+        <div class="form-group">
+            <label for="isbn">ISBN:</label>
+            <input type="text" class="form-control" id="isbn" th:field="*{isbn}">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Booklist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Book list</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <h1 th:text="'Available copies of ' + ${book.title} + ' by ' + ${book.author}"></h1>
+    </div>
+    <!--
+      <div th:each="genre: ${genres}">
+        <h3>Remove later</h3>
+        <h2 th:text="${genre.name}"></h2>
+        <h3 th:text="${genre.id}"></h3>
+      </div>-->
+    <span th:if="${book.images != null}">
+    <!--<img th:src="@{/uploads/(id=${bookId})/(images=${book.images})}" /> -->
+    <img th:src="@{/uploads/} + ${book.images}" class="mx-auto d-block" style="max-height:50vh; max-width:auto"/>
+        <br><br>
+    </span>
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Id</th>
+            <th>User Id</th>
+            <th>Loan Date</th>
+            <th>Loan Expiry Date</th>
+            <th>Status</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="copy: ${copies}">
+            <td th:text="${copy.id}"></td>
+            <td th:text="${copy.user}"></td>
+            <td th:text="${copy.loanDate}"></td>
+            <td th:text="${copy.loanExpiryDate}"></td>
+            <td th:text="@{${copy.user != null ? 'Unavailable' : 'Available'}}"></td>
+
+
+
+            <!--
+              <span th:each="genre: ${genres}">
+                    <td th:if="${book.genre} eq ${genre.id}" th:text="${genre.name}"></td>
+                  </span>
+
+            -->
+
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/crud/copies/{id}/create (id=${bookId})}">Add new Copy</a>
+
+
+</div>
+</body>
+</html>
