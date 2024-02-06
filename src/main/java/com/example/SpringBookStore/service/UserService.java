@@ -11,4 +11,8 @@ public interface UserService {
     User findByEmail(String email);
 
     List<UserDto> findAllUsers();
+
+
+    boolean isLoggedIn();
+    boolean isAdmin();
 }

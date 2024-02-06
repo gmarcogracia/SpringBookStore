@@ -32,7 +32,7 @@ public class LoanedBook {
     private  Book book;
 
 
-//One user could have more than one book lent, but this is simplified due to time constraints
+//One user could have more than one book lent, but this is intented for a smaller library
     @OneToOne
     private  User user;
 

@@ -14,13 +14,31 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Book list</a>
+        <a class="navbar-brand">Book Lending System</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item" th:if="${isLogged}">
+                <a class="nav-link" style="color:white" href="/myAccount">My Account</a>
+            </li>
+            <li class="nav-item" th:unless="${isLogged}">
+                <a class="nav-link"  style="color:white" href="/login">Login or register</a>
+            </li>
 
+            <li class="nav-item">
+                <a class="nav-link" style="color:white" href="/booklist">Book list</a>
+            </li>
+            <span th:if="${isAdmin}">
+    <li class="nav-item">
+      <a class="nav-link" style="color:white" href="/users">Users</a>
+    </li></span>
+        </ul>
     </div>
 </nav>
+
+
+
 <div class="container">
     <div class="row">
         <h1 th:text="'Available copies of ' + ${book.title} + ' by ' + ${book.author}"></h1>
@@ -54,21 +72,31 @@
             <td th:text="${copy.user}"></td>
             <td th:text="${copy.loanDate}"></td>
             <td th:text="${copy.loanExpiryDate}"></td>
-            <td th:text="@{${copy.user != null ? 'Unavailable' : 'Available'}}"></td>
+
+            <td>
+                <span  th:if="${copy.user ==null}" class="text-success"><a  th:href="@{/loans/getloan/{id} (id=${copy.id})}" class="link-underline-success">Available!</a></span>
+                <span th:unless="${copy.user ==null}" class="text-danger">Unavailable</span>
+            </td>
 
 
 
-            <!--
+            <!--  /loans/getloan/{id} (id=${bookId})} Probably does not work
               <span th:each="genre: ${genres}">
                     <td th:if="${book.genre} eq ${genre.id}" th:text="${genre.name}"></td>
                   </span>
 
+
+            <td  th:text="@{${copy.user != null ? 'Unavailable' : 'Available'}}" th:href="@{${copy.user != null ? '' : '/loans/getloan/{id} (id=${bookId})}'}}">
+
+            </td>
             -->
 
         </tr>
         </tbody>
     </table>
+    <span th:if="${isAdmin}">
     <a th:href="@{/crud/copies/{id}/create (id=${bookId})}">Add new Copy</a>
+    </span>
 
 
 </div>

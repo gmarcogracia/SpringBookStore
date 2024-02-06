@@ -8,12 +8,38 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">Book Lending System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item" th:if="${isLogged}">
+        <a class="nav-link" style="color:white" href="/myAccount">My Account</a>
+      </li>
+      <li class="nav-item" th:unless="${isLogged}">
+        <a class="nav-link"  style="color:white" href="/login">Login or register</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" style="color:white" href="/booklist">Book list</a>
+      </li>
+      <span th:if="${isAdmin}">
+    <li class="nav-item">
+      <a class="nav-link" style="color:white" href="/users">Users</a>
+    </li></span>
+    </ul>
+  </div>
+</nav>
+
 <div class="container mt-5">
   <h2>Book Form</h2>
  <!-- <h1 th:text="${book.id != 0} ? @{'Modificar'} : @{'Añadir'}"></h1> -->
   <form action="formulario.php" method="post"
-        th:action="@{/crud/books/create/submit}"
+
         th:object="${book}"
+        th:action="${book.id != 0} ? @{crud/books/modificar/submit} : @{crud/books/create/submit}"
     enctype="multipart/form-data">
     <!-- Not working "${book.id != 0} ? @{/books/modificar/submit} : @{/books/create/submit}"-->
 
@@ -41,7 +67,7 @@
       <label for="image">Image:</label>
     <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/jpg" />
     </div>
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-primary">Save</button>
   </form>
 </div>
 

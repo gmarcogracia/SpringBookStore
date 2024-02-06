@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Booklist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">Book Lending System</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item" th:if="${isLogged}">
+                <a class="nav-link" style="color:white" href="/myAccount">My Account</a>
+            </li>
+            <li class="nav-item" th:unless="${isLogged}">
+                <a class="nav-link"  style="color:white" href="/login">Login or register</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" style="color:white" href="/booklist">Book list</a>
+            </li>
+            <span th:if="${isAdmin}">
+    <li class="nav-item">
+      <a class="nav-link" style="color:white" href="/users">Users</a>
+    </li></span>
+        </ul>
+    </div>
+</nav>
+
+<br><br>
+<h1>User Account Details</h1>
+
+<table class="table table-striped table-bordered table-hover">
+<thead class="table-dark">
+<tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Penalty</th>
+
+
+</tr>
+
+</thead>
+<tbody>
+<tr>
+    <td th:text="${user.name}"></td>
+    <td th:text="${user.email}"></td>
+    <td th:text="${isAdmin == true} ? @{'Admin'} : @{'Client'}"></td>
+    <td th:text="${user.penalty}"></td>
+
+
+
+
+</tr>
+</tbody>
+</table>
+
+<span th:if="${user.loanedBook != null}">
+    <h2 style="text-align:center;">Loaned Books</h2>
+
+      <span th:if="${book.images != null}">
+    <!--<img th:src="@{/uploads/(id=${bookId})/(images=${book.images})}" /> -->
+    <img th:src="@{/myImages/} + ${book.images}" class="mx-auto d-block" style="max-height:50vh; max-width:auto"/>
+        <br><br>
+    </span>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>ISBN</th>
+        <th>Genre</th>
+        <th>Tags</th>
+        <th>Loan Date</th>
+        <th>Loan Expiry Date</th>
+        <th>Return</th>
+
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.genre}"></td>
+        <td th:text="${book.tags}"></td>
+        <td th:text="${copy.loanDate}"></td>
+        <td th:text="${copy.loanExpiryDate}"></td>
+        <td><a th:href="@{/loans/return/{id}(id=${copy.id})}" >Return Book</a></td>
+
+
+
+
+    </tr>
+    </tbody>
+</table>
+    </span>
+
+
+</body>
+</html>

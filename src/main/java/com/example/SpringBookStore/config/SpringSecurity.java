@@ -16,43 +16,45 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 //TODO TERMINAR LOGIN PARA PODER HACER EL RESTO DE LA APP
 
-    @Configuration
-    @EnableWebSecurity
-    public class SpringSecurity {
+@Configuration
+@EnableWebSecurity
+public class SpringSecurity {
 
-        @Autowired
-        private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-        @Bean
-        public static PasswordEncoder passwordEncoder(){
-            return new BCryptPasswordEncoder();
-        }
+    @Bean
+    public static PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
-        @Bean
-        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-            http.csrf().disable()
-                    .authorizeHttpRequests((authorize) ->
-                            authorize.requestMatchers("/register/**").permitAll()
-                                    .requestMatchers("/index","/**").permitAll()
-                                     .requestMatchers("/users").hasRole("ADMIN")
-                                    .requestMatchers("/crud/**").permitAll()//hasRole("ADMIN")
-                                    .requestMatchers("/books/**","/loans/**").permitAll()
-                                    .requestMatchers("/booklist/**").permitAll()
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/index").permitAll()
+                                .requestMatchers("/users").authenticated()//hasRole("ROLE_ADMIN") TODO FIX THIS
+                                .requestMatchers("/crud/**","/crud/books/**").authenticated()//hasRole("ROLE_ADMIN")
+                                .requestMatchers("/books/**","/loans/**").permitAll()
+                                .requestMatchers("/myAccount").authenticated()
+                                .requestMatchers("/loans/getLoan/**","/loans/return/**").authenticated()
+                                .requestMatchers("/booklist/**","/").permitAll()
 
-                                    .requestMatchers("/?continue")
+                                .requestMatchers("/?continue").authenticated()
 
-                    ).formLogin(
-                    form -> form
-                            .loginPage("/login")
-                            .loginProcessingUrl("/login")
-                            .defaultSuccessUrl("/users")
-                            .permitAll()
-                    ).logout(
-                            logout -> logout
-                                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                    .permitAll()
-                    );
-            return http.build();
+                ).formLogin(
+                        form -> form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/")
+                                .permitAll()
+                ).logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
+                );
+        return http.build();
 
             /*formLogin(
                             form -> form
@@ -61,14 +63,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
                                     .defaultSuccessUrl("/users")
                                     .permitAll()
                                     ).*/
-        }
-//TODO Blow my fucking brains out
-        @Autowired
-        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-            auth
-                    .userDetailsService(userDetailsService)
-                    .passwordEncoder(passwordEncoder());
-        }
     }
-
+    //TODO Blow my fucking brains out
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
+}
 

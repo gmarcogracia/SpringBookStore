@@ -39,7 +39,7 @@ public class Book {
     @ManyToOne
     private Genre genre;
 
-    //TODO HACER SUBIDA DE IMAGENES EN DETALLE DE LIBRO ES OBLIGATORIO (AHORA LO ES POR ALGUN ,MOTIVO)
+    //TODO HACER ISBN UNIQUE Y ARREGLAR BASE DE DATOS PARA TENER SOLO ENTRADAS BUENAS
     @Column
     private  String images;
 

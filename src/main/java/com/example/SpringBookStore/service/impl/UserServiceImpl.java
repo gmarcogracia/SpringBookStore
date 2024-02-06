@@ -7,6 +7,9 @@ import com.example.SpringBookStore.repository.RoleRepository;
 import com.example.SpringBookStore.repository.UserRepository;
 import com.example.SpringBookStore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +19,9 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
 
@@ -75,6 +79,35 @@ public class UserServiceImpl implements UserService {
         Role role = new Role();
         role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
+    }
+
+    public boolean isLoggedIn() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {//Apparently this checks if theres an autenticated user TESTED, CONDITIONAL WORKS
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isAdmin() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {//Apparently this checks if theres an autenticated user TESTED, CONDITIONAL WORKS
+
+
+            User user = this.userRepository.findByEmail(authentication.getName());
+            Role admin = this.roleRepository.findByName("ROLE_ADMIN");
+            if (user.getRoles().contains(admin)) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+
     }
 
 }

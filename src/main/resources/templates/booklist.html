@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+
 >
 <head>
   <meta charset="UTF-8">
@@ -11,15 +12,37 @@
         crossorigin="anonymous">
 </head>
 <body>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Book list</a>
+    <a class="navbar-brand">Book Lending System</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item" th:if="${isLogged}">
+      <a class="nav-link" style="color:white" href="/myAccount">My Account</a>
+    </li>
+    <li class="nav-item" th:unless="${isLogged}">
+      <a class="nav-link"  style="color:white" href="/login">Login or register</a>
+    </li>
 
+    <li class="nav-item">
+      <a class="nav-link" style="color:white" href="/booklist">Book list</a>
+    </li>
+    <span th:if="${isAdmin}">
+    <li class="nav-item">
+      <a class="nav-link" style="color:white" href="/users">Users</a>
+    </li></span>
+    </ul>
   </div>
 </nav>
+
+
+
+
+
 <div class="container">
   <div class="row">
     <h1> Book list </h1>
@@ -41,7 +64,10 @@
       <th>Price</th>
       <th>Genre</th>
       <th>Tags</th>
-
+      <span th:if="${isAdmin}">
+      <th>Edit</th>
+        <th>Delete</th>
+      </span>
     </tr>
     </thead>
     <tbody>
@@ -59,8 +85,12 @@
       </td>
 
       <td th:text="${book.price}"></td>
-      <td th:text="${book.genre}"></td><!--TODO PATCH LATER SHOULD WORK WIth .name but it doesn't because thymeleaf-->
+      <td th:text="${book.genre}"></td><!--TODO PATCH LATER SHOULD WORK WIth .name but it doesn't because thymeleaf ASK ANTONIO  ALTERNATIVE FIX, PASS GENRES TO MODEL-->
       <td th:text="${book.tags}"></td>
+      <span th:if="${isAdmin}">
+      <th><a class="btn btn-primary" th:href="@{/crud/books/modify/{id}(id=${book.id})}">Update</a></th> <!--TODO ADD LINKS-->
+        <th><a class="btn btn-danger" th:href="@{/crud/books/delete/{id}(id=${book.id})}">Delete</a></th>
+      </span>
 
 
 
@@ -69,7 +99,9 @@
     </tr>
     </tbody>
   </table>
-                            <a th:href="@{/form}">Add new book</a>
+  <span th:if="${isAdmin}">
+  <a th:href="@{/form}">Add new book</a>
+</span>
 
 </div>
 </body>
