@@ -39,8 +39,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
 
 
-       //TODO FIX MIXMATCH BETWEEN ENCRYPTED PASSWORDS AND RAW PASSWORDS  ASK ANTONIO  user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         Role role = roleRepository.findByName("CLIENT");
         if(role == null){

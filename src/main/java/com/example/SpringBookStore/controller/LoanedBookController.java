@@ -96,7 +96,7 @@ public class LoanedBookController {
             userRepository.save(user);
 
 
-        return "redirect:/bookList";
+        return "redirect:/booklist";
     }else{
             return "redirect:/login";
         }
@@ -116,6 +116,25 @@ public class LoanedBookController {
         return "redirect:/myAccount";
 //Podria añadirsele otra tabla que guardase los registros de todos los prestamos hechos con anterioridad TODO implementarlo si hay tiempo (Probablemente no)
 
+    }
+    @GetMapping("/loans/delete/{id}")
+    public String deleteBook(@PathVariable long id,Model model){
+        if (userService.isAdmin()){
+            LoanedBook copy = loanedBookRepository.findById(id);
+            User user = copy.getUser();
+            if(user != null){
+                user.setLoanedBook(null);
+                //Copies should only be deleted if they are lost by current user, and he will be penaliced
+               user.setPenalty(user.getPenalty()+50);
+               userRepository.save(user);
+
+            }
+            Book book = copy.getBook();
+            book.setAvailableCopies(book.getAvailableCopies()-1);
+            bookRepository.save(book);
+        loanedBookRepository.deleteById(id);
+        return "redirect:/loans/" + book.getId();}
+        return "login";
     }
 
 }

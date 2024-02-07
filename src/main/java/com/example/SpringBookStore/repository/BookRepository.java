@@ -16,6 +16,8 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     public Book save(Book book);
     public ArrayList<Book> findByTags(String tags);
     public ArrayList<Book> findByAuthor(String author);
+    public ArrayList<Book> findByTitleContaining(String title);
+    public ArrayList<Book> findByIsbn(String isbn);
 
 
 

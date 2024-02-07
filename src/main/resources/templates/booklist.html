@@ -5,7 +5,7 @@
 >
 <head>
   <meta charset="UTF-8">
-  <title>Booklist</title>
+  <title>booklist</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -24,6 +24,9 @@
     <li class="nav-item" th:if="${isLogged}">
       <a class="nav-link" style="color:white" href="/myAccount">My Account</a>
     </li>
+      <li class="nav-item" th:if="${isLogged}">
+        <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
+      </li>
     <li class="nav-item" th:unless="${isLogged}">
       <a class="nav-link"  style="color:white" href="/login">Login or register</a>
     </li>
@@ -38,15 +41,46 @@
     </ul>
   </div>
 </nav>
-
-
-
-
-
+<!-- Searchbar -->
 <div class="container">
+<div class="input-group">
+<!--  <select>
+    <option value="all">Show all books</option>
+    <option id="title" name="title" value="title">Filter by Title</option>
+    <option value="author" id="author" name="author">Filter by Author</option>
+    <option value="isbn" id="isbn" name="isbn">Filter by ISBN</option>
+
+
+  </select>
+  -->
+<!--<form th:object="${title}" th:action="@{/booklist/filter/title/submit}">   th:field="${title}"-->
+
+  <div class="form-outline" data-mdb-input-init>
+    <input type="search" id="title" name="title" class="form-control" placeholder="Search by title"/>
+
+
+
+
+  </div>
+  <a type="submit" class="btn btn-primary"  id="link">
+    <i class="fas fa-search"></i>
+  </a>
+
+<!--</form>-->
+</div>
+
+  <script>
+      var text =  document.getElementById("title").value ;
+      var link = document.getElementById("link");
+      link.href = "/booklist/filter/title/"+ text ;
+    </script>
   <div class="row">
     <h1> Book list </h1>
   </div>
+
+  <br>
+  <br>
+
 <!--
   <div th:each="genre: ${genres}">
     <h3>Remove later</h3>
@@ -62,7 +96,7 @@
       <th>ISBN</th>
       <th>Available copies</th>
       <th>Price</th>
-      <th>Genre</th>
+      <!-- <th>Genre</th> -->
       <th>Tags</th>
       <span th:if="${isAdmin}">
       <th>Edit</th>
@@ -85,11 +119,11 @@
       </td>
 
       <td th:text="${book.price}"></td>
-      <td th:text="${book.genre}"></td><!--TODO PATCH LATER SHOULD WORK WIth .name but it doesn't because thymeleaf ASK ANTONIO  ALTERNATIVE FIX, PASS GENRES TO MODEL-->
+     <!-- <td th:text="${book.genre}"></td>--><!--TODO PATCH LATER SHOULD WORK WIth .name but it doesn't because thymeleaf ASK ANTONIO  ALTERNATIVE FIX, PASS GENRES TO MODEL-->
       <td th:text="${book.tags}"></td>
       <span th:if="${isAdmin}">
-      <th><a class="btn btn-primary" th:href="@{/crud/books/modify/{id}(id=${book.id})}">Update</a></th> <!--TODO ADD LINKS-->
-        <th><a class="btn btn-danger" th:href="@{/crud/books/delete/{id}(id=${book.id})}">Delete</a></th>
+      <td><a class="btn btn-primary" th:href="@{/crud/books/modify/{id}(id=${book.id})}">Update</a></td>
+        <td><a class="btn btn-danger" th:href="@{/crud/books/delete/{id}(id=${book.id})}">Delete</a></td>
       </span>
 
 

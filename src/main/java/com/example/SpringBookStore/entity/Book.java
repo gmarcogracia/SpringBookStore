@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +20,7 @@ import lombok.Setter;
 public class Book {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     @Column(nullable=false)
     private  String title;
 
@@ -46,19 +49,21 @@ public class Book {
 
 
 
+
+
     /**
     @ManyToOne
     private Genre genre;
-     Fucks up the listing and overcomplicates things TODO Implement it properly if there's time SOLVED! :D
+     Fucks up the listing and overcomplicates things TODO Implement it properly if there's time
 **/
 
 
-
+/*
     @Transient
     public String getPhotosImagePath() {
         if (images == null || id == null) return null;
 
         return "/uploads/" + id + "/" + images;
-    }
+    }*/
 
 }

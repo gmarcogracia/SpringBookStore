@@ -73,9 +73,11 @@ public class AuthController {
 
     @GetMapping("/users")
     public String listRegisteredUsers(Model model){
+        if (userService.isAdmin()){
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users", users);
-        return "users";
+        return "users";}
+        return  "login";
     }
     @GetMapping("/myAccount")
     public String showAccountDetails(Model model)
@@ -98,5 +100,5 @@ public class AuthController {
             return "myAccount";
 
     }
-        else{ return "bookList";}
+        else{ return "login";}
 }}
