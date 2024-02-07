@@ -42,9 +42,9 @@
   </div>
 </nav>
 <!-- Searchbar -->
-<div class="container">
+<div class="container"><!--
 <div class="input-group">
-<!--  <select>
+  <select>
     <option value="all">Show all books</option>
     <option id="title" name="title" value="title">Filter by Title</option>
     <option value="author" id="author" name="author">Filter by Author</option>
@@ -54,7 +54,7 @@
   </select>
   -->
 <!--<form th:object="${title}" th:action="@{/booklist/filter/title/submit}">   th:field="${title}"-->
-
+<!--
   <div class="form-outline" data-mdb-input-init>
     <input type="search" id="title" name="title" class="form-control" placeholder="Search by title"/>
 
@@ -66,7 +66,8 @@
     <i class="fas fa-search"></i>
   </a>
 
-<!--</form>-->
+</form>-->
+  <!--
 </div>
 
   <script>
@@ -75,9 +76,9 @@
       link.href = "/booklist/filter/title/"+ text ;
     </script>
   <div class="row">
-    <h1> Book list </h1>
+-->
   </div>
-
+<h1> Book list </h1>
   <br>
   <br>
 

@@ -134,7 +134,7 @@ public class BookController {
     @PostMapping("/crud/books/modify/submit")
     public String saveModifications(@ModelAttribute Book book, @RequestParam("image") MultipartFile multipartFile) throws IOException {
         System.out.println(book.getId());
-        bookRepository.save(book);
+
 
 
         Instant crrntdate = new Date().toInstant();
@@ -149,6 +149,8 @@ public class BookController {
 
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         book.setImages(fileName);
+        book.setAvailableCopies(loanedbookRepository.countByBookId(book.getId()));
+        bookRepository.save(book);
         //TODO FIX THIS (IT SHOULD WORK BUT I DON'T KNOW WHY IT DOES NOT)
 
         return  "redirect:/booklist";
